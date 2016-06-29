@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<include file="struts-default.xml" />
+	<constant name="struts.action.extension" value=","></constant>  
+    <!-- 上传文件最大限制（如果为多文件上传，则为多个文件的总大小） -->  
+    <constant name="struts.multipart.maxSize" value="40000000"></constant>  
+    <!-- 存放上传文件的临时目录 -->  
+    <!--  <constant name="struts.multipart.saveDir" value="D:\\temp"></constant>    -->
+    
+    
+	<package name="LMS" extends="struts-default">
+		<action name="register" class="regAction">
+			<result name="input">/WebPage/register/register.jsp</result>
+			<result name="success">/WebPage/login/login.jsp</result> 
+			<result name="error">/WebPage/register/register.jsp</result>
+		</action>
+		<action name="login" class="loginAction">
+			<result name="input">/WebPage/login/login.jsp</result>
+			<result name="success">/WebPage/Booksearch/search.jsp</result> 
+			<result name="error">/WebPage/login/login.jsp</result>
+		</action>
+		<action name="normalfindBook" class="noramlfindBookAction">
+			<result name="input">/WebPage/login/login.jsp</result>
+			<result name="success">/WebPage/ReserveBook/booking.jsp</result> 
+			<result name="error">/WebPage/Booksearch/search.jsp</result>
+		</action>
+		<action name="superfindBook" class="superfindBookAction">
+			<result name="input">/WebPage/login/login.jsp</result>
+			<result name="success">/WebPage/ReserveBook/booking.jsp</result> 
+			<result name="error">/WebPage/power-search/psearch.jsp</result>
+		</action>
+		<action name="bookInfo" class="bookInfoAction">
+			<result name="input"></result>
+			<result name="success">/WebPage/bookinfo/bookinfo.jsp</result> 
+			<result name="error">/WebPage/ReserveBook/booking.jsp</result>
+		</action>
+		<action name="addBook" class="addBookAction">
+			<result name="input">/WebPage/register/login.jsp</result>
+			<result name="success">/Register.jsp</result> 
+			<result name="error">/Register.jsp</result>
+		</action>
+		<action name="borrowAndreturn" class="borrowAndreturnAction">
+			<result name="input">/WebPage/register/login.jsp</result>
+			<result name="success">/WebPage/BorrowAndReturn/BorrowAndReturn.jsp</result> 
+			<result name="error">/WebPage/BorrowAndReturn/BorrowAndReturn.jsp</result>
+		</action>
+		<action name="delborrowBook" class="delborrowBookAction">
+			<result name="input">/WebPage/register/login.jsp</result>
+			<result name="success">/Register.jsp</result> 
+			<result name="error">/Register.jsp</result>
+		</action>
+		<action name="reserveBook" class="reserveBookAction">
+			<result name="input"></result>
+			<result name="success">/WebPage/ReserveBook/booking.jsp</result> 
+			<result name="error">/WebPage/ReserveBook/booking.jsp</result>
+		</action>
+		<action name="delreserveBook" class="delreserveBookAction">
+			<result name="input">/WebPage/register/login.jsp</result>
+			<result name="success">/WebPage/userinfo/userinfo.jsp</result> 
+			<result name="error">/WebPage/userinfo/userinfo.jsp</result>
+		</action>
+		<action name="userInfo" class="userInfoAction">
+			<result name="input">/WebPage/register/login.jsp</result>
+			<result name="success">/WebPage/userinfo/userinfo.jsp</result> 
+			<result name="error">/WebPage/login/login.jsp</result>
+		</action>
+		<action name="adminLogin" class="adminLoginAction">
+			<result name="input">/WebPage/register/login.jsp</result>
+			<result name="success">/WebPage/BorrowAndReturn/BorrowAndReturn.jsp</result> 
+			<result name="error">/WebPage/adminLogin/adminLogin.jsp</result>
+		</action>
+		<action name="findBorrowRecord" class="findBorrowRecordAction">
+			<result name="input">/WebPage/register/login.jsp</result>
+			<result name="success">/WebPage/manageList/manageBorrowList.jsp</result> 
+			<result name="error">/WebPage/manageList/manageBorrowList.jsp</result>
+		</action>
+		<action name="findReserveRecord" class="findReserveRecordAction">
+			<result name="input">/WebPage/register/login.jsp</result>
+			<result name="success">/WebPage/manageList/manageReserveList.jsp</result> 
+			<result name="error">/WebPage/manageList/manageReserveList.jsp</result>
+		</action>
+		
+		 <action name="upLoad" class="uploadAction">  
+            <result name="success">/WebPage/addNewBook/addNewBook.jsp</result>  
+            <result name="error" >/WebPage/addNewBook/addNewBook.jsp</result>  
+            <result name="input" type ="redirect">/index.jsp</result>  
+            <param name="maximumSize ">100000000</param>
+            <param name="allowedTypes">
+            	image/bmp,image/png,image/gif,image/jpeg,image/jpg,
+       			image/pjpeg ,image/bmp, image/gif, image/x-png
+       			<!-- application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain-->
+            </param>  
+        </action>  
+        <action name="download" class="downloadAction">
+    		<result name="success" type="stream">
+			<param name="inputName">fileInput</param>
+			<param name="contentDisposition">attachment;filename="${fileName}"</param>
+		</result>
+		</action>  
+	</package>
+	
+     
+  
+</struts>
