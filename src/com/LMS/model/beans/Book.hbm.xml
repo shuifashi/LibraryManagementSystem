@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+                            "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                            "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.LMS.model.beans">
+	<class name="Book" table="book">
+		<id name="bookId" column="bookId" type = "java.lang.String">
+			<generator class="uuid"/> 
+		</id>
+		<property name="Picture" column="Picture" type="java.lang.String"
+			not-null="false" length="255"></property>
+		<property name="ISBN" column="ISBN" type="java.lang.String"
+			not-null="true" length="255"></property>
+		<property name="bookName" column="bookName" type="java.lang.String"
+			not-null="true" length="255"></property>
+		<property name="Author" column="Author" type="java.lang.String"
+			not-null="true" length="255"></property>
+		<property name="Price" column="Price" type="java.lang.String"
+			not-null="true" length="255"></property>
+		<property name="Publisher" column="Publisher" type="java.lang.String"
+			not-null="true" length="255"></property>
+		<property name="location" column="location" type="java.lang.String"
+			not-null="true" length="255"></property>	
+		<property name="bookAbstract" column="bookAbstract" type="java.lang.String"
+			not-null="true" length="255"></property>
+		<property name="flag" column="flag" type="int" length="10" />
+	</class>
+</hibernate-mapping>

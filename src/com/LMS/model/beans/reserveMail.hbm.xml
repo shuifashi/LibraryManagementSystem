@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+                            "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                            "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.LMS.model.beans">
+	<class name="reserveMail" table="reservemail">
+		<id name="recordId" column="recordId" type = "java.lang.String">
+			<generator class="uuid"/> 
+		</id>
+		<property name="email" column="email" type="java.lang.String"
+			not-null="true" length="255"></property>
+		<property name="userName" column="userName" type="java.lang.String"
+			not-null="true" length="255"></property>
+		<property name="bookName" column="bookName" type="java.lang.String"
+			not-null="true" length="255"></property>
+		<property name="endTime" column="endTime" type="java.lang.String"
+			not-null="false" length="255"></property>	
+		<property name="flag" column="flag" type="int" length="10" />
+	</class>
+</hibernate-mapping>
