@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!-- 定义数据源的信息 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass">
+			<value>com.mysql.jdbc.Driver</value>
+		</property>
+		<property name="jdbcUrl">
+			<value>jdbc:mysql://localhost/project</value>
+		</property>
+		<property name="user">
+			<value>root</value>
+		</property>
+		<property name="password">
+			<value>root</value>
+		</property>
+		<property name="maxPoolSize">
+			<value>80</value>
+		</property>
+		<property name="minPoolSize">
+			<value>1</value>
+		</property>
+		<property name="initialPoolSize">
+			<value>1</value>
+		</property>
+		<property name="maxIdleTime">
+			<value>20</value>
+		</property>
+	</bean>
+
+	<!--定义Hibernate的SessionFactory -->
+	<!-- SessionFactory使用的数据源为上面的数据源 -->
+	<!-- 指定了Hibernate的映射文件和配置信息 -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref local="dataSource" />
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>com/LMS/model/beans/User.hbm.xml</value>
+				<value>com/LMS/model/beans/registerMail.hbm.xml</value>
+				<value>com/LMS/model/beans/Book.hbm.xml</value>
+				<value>com/LMS/model/beans/Record.hbm.xml</value>
+				<value>com/LMS/model/beans/reserveMail.hbm.xml</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="show_sql">true</prop>
+				<prop key="hibernate.jdbc.batch_size">200</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<!--数据类 -->
+	<bean id="baseDao" class="com.LMS.model.daoImpl.BaseDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="userDao" class="com.LMS.model.daoImpl.UserDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="bookDao" class="com.LMS.model.daoImpl.BookDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="recordDao" class="com.LMS.model.daoImpl.RecordDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="registerMailDao" class="com.LMS.model.daoImpl.registerMailDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="reserveMailDao" class="com.LMS.model.daoImpl.reserveMailDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	<!--业务逻辑类 -->
+	<bean id="userManager" class="com.LMS.model.serviceImpl.UserManagerImpl">
+		<property name="dao">
+			<ref bean="userDao" />
+		</property>
+	</bean>
+	<bean id="bookManager" class="com.LMS.model.serviceImpl.BookManagerImpl">
+		<property name="dao">
+			<ref bean="bookDao" />
+		</property>
+	</bean>
+	<bean id="RecordManager" class="com.LMS.model.serviceImpl.RecordManagerImpl">
+		<property name="recordDao">
+			<ref bean="recordDao" />
+		</property>
+		<property name="bookDao">
+			<ref bean="bookDao" />
+		</property>
+		<property name="userDao">
+			<ref bean="userDao" />
+		</property>
+	</bean>
+	<!-- Action -->
+	<bean id="regAction" class="com.LMS.controller.action.RegisterAction">
+		<property name="userManager">
+			<ref bean="userManager" />
+		</property>
+	</bean>
+	
+	<bean id="loginAction" class="com.LMS.controller.action.LoginAction">
+		<property name="userManager">
+			<ref bean="userManager" />
+		</property>
+	</bean>
+	
+	<bean id="superfindBookAction" class="com.LMS.controller.action.superfindBookAction">
+		<property name="bookManager">
+			<ref bean="bookManager" />
+		</property>
+	</bean>
+	<bean id="bookInfoAction" class="com.LMS.controller.action.bookInfoAction">
+		<property name="bookManager">
+			<ref bean="bookManager" />
+		</property>
+	</bean>
+	<bean id="noramlfindBookAction" class="com.LMS.controller.action.normalfindBookAction">
+		<property name="bookManager">
+			<ref bean="bookManager" />
+		</property>
+	</bean>
+	<bean id="addBookAction" class="com.LMS.controller.action.addBookAction">
+		<property name="bookManager">
+			<ref bean="bookManager" />
+		</property>
+	</bean>
+	<bean id="borrowAndreturnAction" class="com.LMS.controller.action.borrowAndreturnAction">
+		<property name="RecordManager">
+			<ref bean="RecordManager" />
+		</property>
+	</bean>
+	<bean id="delborrowBookAction" class="com.LMS.controller.action.delBorrowAction">
+		<property name="RecordManager">
+			<ref bean="RecordManager" />
+		</property>
+	</bean>
+	<bean id="reserveBookAction" class="com.LMS.controller.action.reserveBookAction">
+		<property name="RecordManager">
+			<ref bean="RecordManager" />
+		</property>
+		<property name="bookManager">
+			<ref bean="bookManager" />
+		</property>
+	</bean>
+	<bean id="userInfoAction" class="com.LMS.controller.action.userInfoAction">
+		<property name="RecordManager">
+			<ref bean="RecordManager" />
+		</property>
+		<property name="bookManager">
+			<ref bean="bookManager" />
+		</property>
+		<property name="userManager">
+			<ref bean="userManager" />
+		</property>
+	</bean>
+	<bean id="findBorrowRecordAction" class="com.LMS.controller.action.findBorrowRecordAction">
+		<property name="RecordManager">
+			<ref bean="RecordManager" />
+		</property>
+		<property name="bookManager">
+			<ref bean="bookManager" />
+		</property>
+	</bean>
+	<bean id="findReserveRecordAction" class="com.LMS.controller.action.findReserveRecordAction">
+		<property name="RecordManager">
+			<ref bean="RecordManager" />
+		</property>
+		<property name="bookManager">
+			<ref bean="bookManager" />
+		</property>
+	</bean>
+	<bean id="delreserveBookAction" class="com.LMS.controller.action.delReserveAction">
+		<property name="RecordManager">
+			<ref bean="RecordManager" />
+		</property>
+		<property name="bookManager">
+			<ref bean="bookManager" />
+		</property>
+	</bean>
+	<bean id="uploadAction" class="com.LMS.controller.action.uploadAction">
+		<property name="bookManager">
+			<ref bean="bookManager" />
+		</property>
+	</bean>
+	<bean id="adminLoginAction" class="com.LMS.controller.action.adminLoginAction">
+	</bean>
+	
+	<bean id="downloadAction" class="com.LMS.controller.action.downloadAction"></bean>
+	<!-- more bean definitions go here -->
+
+</beans>
