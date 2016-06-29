@@ -1,0 +1,72 @@
+
+.logout {
+    font-weight: 500;
+    font-size: 20px;
+    border: none;
+    top: 32px;
+    color: #23527c;
+
+}
+.userinfo {
+    font-weight: 500;
+    border: none;
+    font-size: 20px;
+    top: 32px;
+    color: #23527c;
+}
+.user-info-button {
+    background-color: white;
+    border: none;
+}
+
+.searchArea {
+    top: 130px;
+
+}
+
+.logo {
+    top:110px;
+    font-size: 70px;
+}
+
+.input-group-addon {
+    padding: 0px 12px;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1;
+    color: #555;
+    text-align: center;
+    background-color: white;
+    border: none;
+    border-radius: 4px;
+}
+#pearch-submit-button {
+	background-color:white;
+    color: white;
+    height: 40px;
+    width: 160px;
+    background-color:#0082e6;
+}
+.search-options {
+    margin-top:30px;
+
+}
+.power-search {
+    top: 30px;
+
+}
+
+#power-search-button {
+    background-color:white;
+    color: black;
+
+}
+#submit-button {
+    height: 45px;
+    width: 100px;
+    background-color:#0082e6;
+}
+
+#search {
+    height: 45px;
+}
